@@ -7,8 +7,9 @@ export function useModal<T>({component, slots, props, emits}): Promise<void> {
 
         const closeHandler = () => {
             app.unmount()
-            document.body.removeChild(modalDiv)
-            console.log('close')
+            document.body.removeChild(modalDiv);
+            emits.onClose(props)
+            // console.log('close')
         }
 
         const ModalWrapper = defineComponent({
@@ -16,9 +17,9 @@ export function useModal<T>({component, slots, props, emits}): Promise<void> {
                 return h(
                     component as any,
                     {
+                        // ...emits,
+                        // ...props,
                         onClose: closeHandler,
-                        ...emits,
-                        ...props,
                     },
                     h(slots.default, {
                         ...emits,

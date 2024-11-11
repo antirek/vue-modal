@@ -1,9 +1,16 @@
 <script setup>
-const emit = defineEmits([''])
+
+const emit = defineEmits(['confirm', 'close'])
+
 const handleConfirm = (data) => {
-    emit('confirm', data)
-    emit('close')
+    emit('confirm', data);
+    handleClose();
 }
+
+const handleClose = () => {
+    emit('close');
+}
+
 </script>
 
 <template>
@@ -14,20 +21,22 @@ const handleConfirm = (data) => {
                 role="dialog"
                 aria-labelledby="modalTitle"
                 aria-describedby="modalDescription">
+
                 <section class="modal-body" id="modalDescription">
                     <slot name="default" />
                 </section>
+                
                 <button
                     type="button"
                     class="btn-green"
-                    @click="$emit('close')"
+                    @click="handleClose"
                     aria-label="Close modal">
                     Close me!
                 </button>
                 <button
                     type="button"
                     class="btn-green"
-                    @click="handleConfirm('confirm data')"
+                    @click="handleConfirm"
                     aria-label="Close modal">
                     confirm
                 </button>
@@ -50,7 +59,7 @@ const handleConfirm = (data) => {
 }
 
 .modal {
-    background: red;
+    background: #fff;
     box-shadow: 2px 2px 20px 1px;
     overflow-x: auto;
     display: flex;
